@@ -6,6 +6,7 @@ use App\Exceptions\MissingApiKeyException;
 use App\Interfaces\WeatherLoaderInterface;
 use App\Managers\ApiWeatherLoader;
 use App\Managers\CompareManager;
+use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -39,5 +40,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app->when(ApiWeatherLoader::class)
             ->needs('$key')
             ->give($openWeatherKey);
+
+        $this->app->bind(Client::class, function () {
+            return new Client([ 'base_uri' => 'http://api.openweathermap.org' ]);
+        });
     }
 }

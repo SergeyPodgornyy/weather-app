@@ -2,15 +2,16 @@
 
 namespace App\Interfaces;
 
-use Illuminate\Support\Collection;
+use App\Entities\CityCollection;
+use App\Entities\WeatherCollection;
 
 interface WeatherLoaderInterface
 {
     /**
      * Load weather for cities
      *
-     * @param   Collection $cities
-     * @return  Collection
+     * @param   CityCollection  $cities
+     * @return  WeatherCollection
      */
-    public function load(Collection $cities) : Collection;
+    public function load(CityCollection $cities) : WeatherCollection;
 }

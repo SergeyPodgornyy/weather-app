@@ -28,7 +28,7 @@ class CityEntity
      * @param   int     $id
      * @return  self
      */
-    public function setId(int $id) : self
+    public function setId(?int $id) : self
     {
         $this->id = $id;
 
@@ -39,7 +39,7 @@ class CityEntity
      * @param   string  $name
      * @return  self
      */
-    public function setName(string $name) : self
+    public function setName(?string $name) : self
     {
         $this->name = $name;
 
@@ -50,7 +50,7 @@ class CityEntity
      * @param   string  $country
      * @return  self
      */
-    public function setCountry(string $country) : self
+    public function setCountry(?string $country) : self
     {
         $this->country = $country;
 
