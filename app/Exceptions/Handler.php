@@ -4,6 +4,9 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -46,6 +49,35 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+        if ($request->expectsJson()) {
+            $response = $this->handleJsonException($exception);
+        } else {
+            $response = $this->handleViewException($exception);
+        }
+
+        return $response ?: parent::render($request, $exception);
+    }
+
+    private function handleJsonException(Exception $exception) : ?JsonResponse
+    {
+        switch (true) {
+            case $exception instanceof MissingApiKeyException:
+                return \response()->json([
+                    'success' => false,
+                    'message' => $exception->getMessage(),
+                ], $exception->getCode());
+            case $exception instanceof ValidationException:
+                return \response()->json([
+                    'success' => false,
+                    'message' => $exception->validator->errors()->getMessages(),
+                ], Response::HTTP_UNPROCESSABLE_ENTITY);
+            default:
+                return null;
+        }
+    }
+
+    private function handleViewException(Exception $exception) : ?Response
+    {
+        return null;
     }
 }
