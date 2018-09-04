@@ -3,6 +3,7 @@
 namespace App\Entities;
 
 use App\Traits\PropertyAwareTrait;
+use Illuminate\Contracts\Support\Arrayable;
 
 /**
  * Class WeatherEntity
@@ -13,8 +14,9 @@ use App\Traits\PropertyAwareTrait;
  * @property int    $visibility
  * @property float  $temperature
  * @property string $weather
+ * @property int|null   $index
  */
-class WeatherEntity
+class WeatherEntity implements Arrayable
 {
     use PropertyAwareTrait;
 
@@ -56,4 +58,12 @@ class WeatherEntity
 
     /** @var string */
     private $weather;
+
+    /** @var int|null */
+    private $index;
+
+    public function toArray() : array
+    {
+        return get_object_vars($this);
+    }
 }
