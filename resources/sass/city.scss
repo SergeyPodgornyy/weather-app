@@ -1,0 +1,20 @@
+.city-container {
+  display: inline-block;
+  width: 150px;
+  margin: 10px;
+
+  img {
+    height: 150px;
+
+    max-width: 100%;
+    max-height: 100%;
+    border: 5px solid #1d68a7;
+    border-radius: 10px;
+  }
+
+  span {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+  }
+}
